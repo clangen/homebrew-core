@@ -43,6 +43,7 @@ class Musikcube < Formula
   end
 
   test do
-    system "musikcubed", "--version"
+    system "musikcubed", "--start"
+    system "musikcubed", "--stop"
   end
 end
