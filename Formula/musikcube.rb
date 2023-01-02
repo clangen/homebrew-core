@@ -21,8 +21,8 @@ class Musikcube < Formula
   depends_on "libvorbis"
   depends_on "openssl@1.1"
   depends_on "taglib"
-  use_from_macos "curl"
-  use_from_macos "ncurses"
+  uses_from_macos "curl"
+  uses_from_macos "ncurses"
 
   def install
     @job_count = [Hardware::CPU.cores - 2, 1].max
