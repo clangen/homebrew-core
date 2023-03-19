@@ -18,6 +18,7 @@ class Musikcube < Formula
   depends_on "libogg"
   depends_on "libopenmpt"
   depends_on "libvorbis"
+  depends_on :macos
   depends_on "openssl@1.1"
   depends_on "taglib"
   uses_from_macos "curl"
