@@ -19,23 +19,13 @@ class Musikcube < Formula
   depends_on "libopenmpt"
   depends_on "libvorbis"
   depends_on :macos
+  depends_on "ncurses"
   depends_on "openssl@1.1"
   depends_on "taglib"
   uses_from_macos "curl"
-  uses_from_macos "ncurses"
 
   def install
-    platform_specific_args = []
-    if OS.mac?
-      platform_specific_args = [
-        "-DNO_NCURSESW=true",
-        "-DENABLE_MACOS_SYSTEM_NCURSES=true",
-      ]
-    end
-    system "cmake",
-      ".",
-      *platform_specific_args,
-      *std_cmake_args
+    system "cmake", ".", *std_cmake_args
     system "make"
     system "make", "install"
   end
