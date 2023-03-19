@@ -1,8 +1,8 @@
 class Musikcube < Formula
   desc "Terminal-based audio engine, library, player and server"
   homepage "https://musikcube.com"
-  url "https://github.com/clangen/musikcube/archive/0.99.4.tar.gz"
-  sha256 "dd8e74c8c8460250c0da325941db2df0f7dcca77f2c68a0295ab21e81f8dd8a4"
+  url "https://github.com/clangen/musikcube/archive/0.99.6.tar.gz"
+  sha256 "739375d47414ad1d8c68facb2d8a975b67584432c2b4d57504d99beffe6922e9"
   license "BSD-3-Clause"
   head "https://github.com/clangen/musikcube.git", branch: "master"
 
@@ -24,12 +24,11 @@ class Musikcube < Formula
   uses_from_macos "ncurses"
 
   def install
-    system "cmake", ".", *std_cmake_args
+    system "cmake",
+      ".",
+      "-DENABLE_MACOS_SYSTEM_NCURSES=true",
+      *std_cmake_args
     system "make"
-    # running `cmake .` again updates cached cmake variables to include resources
-    # generated during the `make` phase; this ensures things like dynamic plugins,
-    # locales, and themes are included in the install manifest.
-    system "cmake", "."
     system "make", "install"
   end
 
