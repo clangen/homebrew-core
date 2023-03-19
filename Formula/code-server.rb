@@ -3,21 +3,21 @@ require "language/node"
 class CodeServer < Formula
   desc "Access VS Code through the browser"
   homepage "https://github.com/coder/code-server"
-  url "https://registry.npmjs.org/code-server/-/code-server-4.9.1.tgz"
-  sha256 "13643c2c29fa4b5c7293161b42fed27112b51e0f7f315f9cbece40fbf37ff45b"
+  url "https://registry.npmjs.org/code-server/-/code-server-4.11.0.tgz"
+  sha256 "ea69ebed2556c5c4a2c6b1e65d1a7956993f27f7fb1e62dc25d6e33edabcd319"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b370e738b9a7dd76c80cf80c69d6741632366317b61440ab679869de84d61252"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "95561c4a91bf003996af35f0c2e8f2d68ffaf17c65b3e50a22783d62761f68cf"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "6207aee543f60462b3b083382df894d97c83698f004d49d63a6d1485fe4b7250"
-    sha256 cellar: :any_skip_relocation, ventura:        "0a5df2521e656d7d848a96923e7d188efa34ebe566d9af62c241f2caf62ed43c"
-    sha256 cellar: :any_skip_relocation, monterey:       "f7ee5fe0d7f9644a229504af6037413e36a741eec0f6f7527087ba8b34f3d267"
-    sha256 cellar: :any_skip_relocation, big_sur:        "5a1a679bf953e520653dfed8f413d355b277013a90cde708d48b039ebac617b4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b578bed0083f34b8d8356a2ed28c9b6811537623946f5e10a7dd1050aafe423e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "640007ec3cf43f3a020c1bee827f8e3b982b5fcef807ab49ace8ac57d5b6e5a1"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "7bc6d0e989b0d3e27030ba6ce8f878f1a7c258557a148e2f00d73ab2ba3f3248"
+    sha256 cellar: :any_skip_relocation, ventura:        "cc0c4929708bdb91d13f6017e3ac8c95faeca0404e9592bc0f4130a1ed0fe529"
+    sha256 cellar: :any_skip_relocation, monterey:       "780c9cf9a707a2d5e565cf38d3df1f24ede9334c5607ddb2b061b185756ee36b"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f28c1920bff008b7166f4d4885c3c33dabfd1e0fcec1ace33de446c0813e1ee9"
   end
 
   depends_on "bash" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "yarn" => :build
   depends_on "node@16"
 

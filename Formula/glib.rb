@@ -3,28 +3,32 @@ class Glib < Formula
 
   desc "Core application library for C"
   homepage "https://developer.gnome.org/glib/"
-  url "https://download.gnome.org/sources/glib/2.74/glib-2.74.3.tar.xz"
-  sha256 "e9bc41ecd9690d9bc6a970cc7380119b828e5b6a4b16c393c638b3dc2b87cbcb"
+  url "https://download.gnome.org/sources/glib/2.76/glib-2.76.0.tar.xz"
+  sha256 "525bb703b807142e1aee5ccf222c344e8064b21c0c45677ef594e587874c6797"
   license "LGPL-2.1-or-later"
 
   bottle do
-    sha256 arm64_ventura:  "9a34e6ef3d80de01678b341b716385bf08edda59db6deef0a519be28aa4835ee"
-    sha256 arm64_monterey: "2476e85f3c4fd1648bb09efbdf812aba44b4af1723205e2376ad5ff787d2d60d"
-    sha256 arm64_big_sur:  "494f7a802d78309d6420ae7d113c65189e09e7a5851320ddb493a7f0dfb2bf4e"
-    sha256 ventura:        "8f12510a26c045ae316ff0670c4dc1faf55d0a6ee12986bd4790e07f48b6d955"
-    sha256 monterey:       "55aebc872575b6c4a49bc8b45755b030bc0cedd258f955adfd2d44c15cccdc20"
-    sha256 big_sur:        "8c7b072925ba9cbf0f4d886a9da404102a4d4c530806319e1094ffdae16337d5"
-    sha256 x86_64_linux:   "d896a5a0f3b720819fd86a85a95c7385b50212918ef9d7db8adb5750e2c2ed99"
+    sha256 arm64_ventura:  "cef78ca8599803c95eb9807522dfc8da7476cbe8b72951c68f9b11476b0857cf"
+    sha256 arm64_monterey: "99e3328a0d04c5ee44f8263c418176d0a1f936f4fac7bc6f06c49ebd8ca672a3"
+    sha256 arm64_big_sur:  "6c59093700c4f9cea45b7c5fa12459f85c668bb7c51f9b2b925b2a413ea3cccb"
+    sha256 ventura:        "3c0e687a22224a9fc0a27ad8f396dc825bf751d3e2854d18851805d18991cd2c"
+    sha256 monterey:       "b9fe5c7c0213d5d32919a6723d55b346709b55d50452e0416048a233ac2d8fa3"
+    sha256 big_sur:        "891b6b84f2dbf80b51321018141d5c61bb7788894871fddd7fa4ae8e2b02f430"
+    sha256 x86_64_linux:   "4e4010f0aac8befffde97900a4c6ef3766084e7c71b2c2f4d0fa6daa46bd0fdf"
   end
 
+  depends_on "gettext" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "gettext"
   depends_on "pcre2"
 
   uses_from_macos "libffi", since: :catalina
   uses_from_macos "python", since: :catalina
+
+  on_macos do
+    depends_on "gettext"
+  end
 
   on_linux do
     depends_on "util-linux"
@@ -34,7 +38,6 @@ class Glib < Formula
   link_overwrite "bin/gdbus-codegen", "bin/glib-genmarshal", "bin/glib-mkenums", "bin/gtester-report"
   link_overwrite "share/glib-2.0/codegen", "share/glib-2.0/gdb"
 
-  # Sync this with `glib-utils.rb`
   # replace several hardcoded paths with homebrew counterparts
   patch do
     url "https://raw.githubusercontent.com/Homebrew/formula-patches/43467fd8dfc0e8954892ecc08fab131242dca025/glib/hardcoded-paths.diff"
@@ -43,16 +46,18 @@ class Glib < Formula
 
   def install
     inreplace %w[gio/xdgmime/xdgmime.c glib/gutils.c], "@@HOMEBREW_PREFIX@@", HOMEBREW_PREFIX
+    # Avoid the sandbox violation when an empty directory is created outside of the formula prefix.
+    inreplace "gio/meson.build", "install_emptydir(glib_giomodulesdir)", ""
 
     # Disable dtrace; see https://trac.macports.org/ticket/30413
     # and https://gitlab.gnome.org/GNOME/glib/-/issues/653
     args = %W[
       --default-library=both
       --localstatedir=#{var}
-      -Diconv=auto
       -Dgio_module_dir=#{HOMEBREW_PREFIX}/lib/gio/modules
       -Dbsymbolic_functions=false
       -Ddtrace=false
+      -Druntime_dir=#{var}/run
     ]
 
     system "meson", "setup", "build", *args, *std_meson_args

@@ -1,10 +1,9 @@
 class Vice < Formula
   desc "Versatile Commodore Emulator"
   homepage "https://sourceforge.net/projects/vice-emu/"
-  url "https://downloads.sourceforge.net/project/vice-emu/releases/vice-3.6.1.tar.gz"
-  sha256 "20df84c851aaf2f5000510927f6d31b32f269916d351465c366dc0afc9dc150c"
+  url "https://downloads.sourceforge.net/project/vice-emu/releases/vice-3.7.1.tar.gz"
+  sha256 "7e3811e6024db0698bfbc321bb324572446b8853d01b4073f09865957b0cab98"
   license "GPL-2.0-or-later"
-  revision 2
   head "https://svn.code.sf.net/p/vice-emu/code/trunk/vice"
 
   livecheck do
@@ -13,14 +12,13 @@ class Vice < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "d62ad32d65d8cd540122d6ef6f822fdf57c018956debf7f8bcfe9015a26677f1"
-    sha256 arm64_monterey: "cee4c0f296da3732d391c5f3590930d98174ec00fc6ccf94c48b89c7021c0a43"
-    sha256 arm64_big_sur:  "74af37fdd526129db172903f6ab915ece592a53e18c8fe08ef1b1e286e4fe94b"
-    sha256 ventura:        "e469d5be05528ab44391141f09d6eca93f827692003763e51a3894ee4e7c667f"
-    sha256 monterey:       "f1057d64cdaa568258a37f21e5de39ed2b2670d0288d4236cf6a9629cf6c2e0a"
-    sha256 big_sur:        "496ee709a8fbe0db29d951196a057990cbfd430f391ee6d1e3c6f77b1620c2ea"
-    sha256 catalina:       "6d9c828065ce78743ca1b6c03715e6d53f2257431c81e129f9bed65537a64fab"
-    sha256 x86_64_linux:   "dffa88b6a794cdeb51087b1c2ddfa6aafbf132189f88fa48e2dfed8783342acc"
+    sha256 arm64_ventura:  "d0bf3eb28be9043f9116bed994770b9ddbcbda019f817d9f66d35f209baba8cd"
+    sha256 arm64_monterey: "90ac62deeed56227098a874eee92465bf5af63d87da03047e0d3a05fe951d46f"
+    sha256 arm64_big_sur:  "02279db7f16355ccfedda4ec76e9286d4062507c5bfb4d66e20d7fea13b9ce03"
+    sha256 ventura:        "faa7d0090d54fc2deff55e8142b67ccf2549955884b414b9bc3d21c9eec4feb2"
+    sha256 monterey:       "83eeb86d3252e8459bb677998a2ad2c6c78eec3d0524cea06585c1ff0120bfcc"
+    sha256 big_sur:        "178230a6fa6f45cf9961387f61be1d17c4496dc45c87c578fb524ad64fc55128"
+    sha256 x86_64_linux:   "387e1bcbcd567f98141f0789672f353059b0bf4f82226ee9802a016294494721"
   end
 
   depends_on "autoconf" => :build
@@ -43,6 +41,7 @@ class Vice < Formula
   depends_on "libpng"
   depends_on "librsvg"
   depends_on "libvorbis"
+  depends_on "readline" # Possible opportunistic linkage. TODO: Check if this can be removed.
 
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
@@ -71,6 +70,7 @@ class Vice < Formula
   end
 
   test do
-    assert_match "Initializing.", shell_output("#{bin}/x64sc -console -limitcycles 1000000 -logfile -", 1)
+    output = shell_output("#{bin}/x64sc -console -limitcycles 1000000 -logfile -", 1)
+    assert_match "Initializing chip model", output
   end
 end

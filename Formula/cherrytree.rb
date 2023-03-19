@@ -1,8 +1,8 @@
 class Cherrytree < Formula
   desc "Hierarchical note taking application featuring rich text and syntax highlighting"
   homepage "https://www.giuspen.com/cherrytree/"
-  url "https://www.giuspen.com/software/cherrytree_0.99.53.tar.xz"
-  sha256 "317fbac7627b6556c7113433b360376d332bd10b6529b43734a8640cef5de24e"
+  url "https://www.giuspen.com/software/cherrytree_0.99.55.tar.xz"
+  sha256 "7daa4358463eb41c133d9b4b742df18f68f47fa5bf398fc2e0801fc4c8381e84"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,19 +11,19 @@ class Cherrytree < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "9aac5afde788011a04a25ad95677e26349965477de00e8910a7fa28c7528b906"
-    sha256 arm64_monterey: "c5c91c57e6761aa11cb64ea2915ef91279741bd679c892736a2365aa2dfe671a"
-    sha256 arm64_big_sur:  "2bf60080bd24afb8141bc79ef89a4375ebe7870e83cd0e0665410d92f6e906dc"
-    sha256 ventura:        "9b8302d2473decb525bf8adc3d271b0cd4d594ded9af8c9ec92aaeb4331c8a47"
-    sha256 monterey:       "09eb640edd7dda49afb9da45dc29071753422dc4b82ac8f21d459e33dbe88258"
-    sha256 big_sur:        "223decdf23f1684fbff69fcf11ccaa68f5fcdfbf5967c86c65df5aab11b0d154"
-    sha256 x86_64_linux:   "5db45be9e186f9b8b3b82e9a95fe588bb65d1efce7617d9a854b3d2bbc455cb0"
+    sha256 arm64_ventura:  "293e735fc95337ead4c3cd16180ff7c2ab25ae1ae902653f87c2abbffce9060d"
+    sha256 arm64_monterey: "18532c16d0c2307b358446a5ec18f9fed6f04bbcdbbfae7ef29ed8dec9679156"
+    sha256 arm64_big_sur:  "eddd058e8fe1c6f64b8cf62b0429ef3a17aa3fbe48c64e71d0533094e7896d1d"
+    sha256 ventura:        "8c33b6c06ba254d62bebef0204e663cf01463b1f165c00f768b47c1ae46d46cf"
+    sha256 monterey:       "49f7d3a9e0075846ac0d4764a0a238fd258db83bb7d3e77d3b53ed5ad8a18513"
+    sha256 big_sur:        "5576d0d1bed929d7926d061f3ffa5badc3b70c76815e2d66197e40b3e96604c5"
+    sha256 x86_64_linux:   "28dba85727ed316f2c832294c63af42f8423d321d8208049dfb8b5982359e3de"
   end
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "adwaita-icon-theme"
   depends_on "fmt"
   depends_on "gspell"

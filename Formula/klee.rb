@@ -4,7 +4,7 @@ class Klee < Formula
   desc "Symbolic Execution Engine"
   homepage "https://klee.github.io/"
   license "NCSA"
-  revision 3
+  revision 4
   head "https://github.com/klee/klee.git", branch: "master"
 
   stable do
@@ -26,14 +26,13 @@ class Klee < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "638d60b7eef46f041ffffeae39a0e7f07757c421fca64f0e96ec377bf2dd3c45"
-    sha256 arm64_monterey: "72652c1a38180b7968574e054df3b358008efce1ea52122b3ddb570a8e763ad5"
-    sha256 arm64_big_sur:  "bf8d6948e59af26ca6da46ca3d0ed7d3def25a566d03130fd975e67c7de7a884"
-    sha256 ventura:        "477150560088d0f84d548c1c72097f27c22a94a3169a538235edfd618e2060af"
-    sha256 monterey:       "4cafb0953113c315d8192e8ac828b90f178d401fcf47c697524e9db90898dc04"
-    sha256 big_sur:        "055cc3545d7dc5affe40a69e998e33e1b0981ce8aacc5c1ab692665e37b0aed2"
-    sha256 catalina:       "6251ed9651c7109d3c09f136176b30df7bd99e6992db38788fa648bfe4399413"
-    sha256 x86_64_linux:   "38a68b9001974655d9d995bb06a464b4c5be5f27995668dbfc1618e6d9a7ec8b"
+    sha256 arm64_ventura:  "a135fc9431d9e03c9cd0131c01360090986300754fffbe8baa7deb057afc124f"
+    sha256 arm64_monterey: "ed674c12a9e2414e6152c48a73f4ef8c6d933f253e6ef4864295f4e9558fd75f"
+    sha256 arm64_big_sur:  "2829efa164e390417595c73a70f8f3409f24a6bb181590091f46b6c3f115f760"
+    sha256 ventura:        "f5f3ddc1c5edf4985ffd88b4c2f36c7239f7bff2c6114601803c8b2dc096293e"
+    sha256 monterey:       "96bc452ac24d66be7a21ac8daca76cdbaefb2470ef6b4da354f0cfaeba44cdb6"
+    sha256 big_sur:        "f9d4fd03f224dcbf15fde6e7dc96f3e36e3e10cb1eb0c384faae412af7d20c06"
+    sha256 x86_64_linux:   "f1525a570a25ff4bb584c1bff4baaa83e11efc81da42901774ba958a5de68da0"
   end
 
   depends_on "cmake" => :build
@@ -41,7 +40,7 @@ class Klee < Formula
   # LLVM 14 support in progress at https://github.com/klee/klee/pull/1477
   depends_on "llvm@13"
   depends_on "python-tabulate"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "sqlite"
   depends_on "stp"
   depends_on "wllvm"

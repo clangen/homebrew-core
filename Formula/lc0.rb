@@ -21,7 +21,7 @@ class Lc0 < Formula
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build # required to compile .pb files
+  depends_on "python@3.11" => :build # required to compile .pb files
   depends_on "eigen"
 
   uses_from_macos "zlib"
@@ -63,8 +63,8 @@ class Lc0 < Formula
 
   test do
     assert_match "Creating backend [blas]",
-      shell_output("lc0 benchmark --backend=blas --nodes=1 --num-positions=1 2>&1")
+      shell_output("#{bin}/lc0 benchmark --backend=blas --nodes=1 --num-positions=1 2>&1")
     assert_match "Creating backend [eigen]",
-      shell_output("lc0 benchmark --backend=eigen --nodes=1 --num-positions=1 2>&1")
+      shell_output("#{bin}/lc0 benchmark --backend=eigen --nodes=1 --num-positions=1 2>&1")
   end
 end

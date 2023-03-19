@@ -1,28 +1,38 @@
 class FluidSynth < Formula
   desc "Real-time software synthesizer based on the SoundFont 2 specs"
   homepage "https://www.fluidsynth.org"
-  url "https://github.com/FluidSynth/fluidsynth/archive/v2.3.0.tar.gz"
-  sha256 "1df5a1afb91acf3b945b7fdb89ac0d99877622161d9b5155533da59113eaaa20"
+  url "https://github.com/FluidSynth/fluidsynth/archive/v2.3.1.tar.gz"
+  sha256 "d734e4cf488be763cf123e5976f3154f0094815093eecdf71e0e9ae148431883"
   license "LGPL-2.1-or-later"
+  revision 1
   head "https://github.com/FluidSynth/fluidsynth.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "ab8f4874a8336e7da16f8016ae7d6dcbc77c9a85743307b07a1013fffaec134a"
-    sha256 cellar: :any,                 arm64_monterey: "2cf2c3338cb090b11eb7774f13573851faec92a8581424a41cf7255336520953"
-    sha256 cellar: :any,                 arm64_big_sur:  "762702137ad043fe56b6811abe371bf379d6c3d28bc25e776e256d2e7f2153cf"
-    sha256 cellar: :any,                 ventura:        "dce4d8f5228099fadb6ba23eb6645387ad080f9e3a0998c8310927a63131f12f"
-    sha256 cellar: :any,                 monterey:       "22a43f4438731dde9dd1eeca118a0275845f85b5856fc86f3c0527498da62b2a"
-    sha256 cellar: :any,                 big_sur:        "1dece23c7e6dd927b5e4a391e170167ee0556b59000432c39e24240a5b630bfd"
-    sha256 cellar: :any,                 catalina:       "276bbd679385ea63ae67c244bcb5fc70e31f124e6bed3465ce79322f2bd68455"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "101144c9ea3f7a77672affe16b198ce8d4c40a781fec160b6fe43c635bdc16b3"
+    sha256 cellar: :any,                 arm64_ventura:  "394ec658cd38eb410d47d8cf69b2ba5e3676e85abffda9f56430f50030909db8"
+    sha256 cellar: :any,                 arm64_monterey: "dbab6a34b765066e0be8a77b90b1bd5157bac31665302566405d338ae609b03f"
+    sha256 cellar: :any,                 arm64_big_sur:  "273bf2db324797f0f909f388cf5dc5d7f717b0ab45f218872035c0c16d520d3f"
+    sha256 cellar: :any,                 ventura:        "4f6535561288d26f7bda0d8825d7ee8354a9e7a088900dad968e961b9cfc7e4e"
+    sha256 cellar: :any,                 monterey:       "9936295c244a7cb84dea9142647ea05ae560fa29afb920f790a2df468ea06a72"
+    sha256 cellar: :any,                 big_sur:        "f12e58b856e8e0872f653baafb3a836d79c82a10d7bb0425a7a0009bfe8264f8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7882b6ed850926a1074dc9c31ea7d0e7721221290c1ecec82bc5fe0d09246038"
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkg-config" => [:build, :test]
   depends_on "glib"
   depends_on "libsndfile"
   depends_on "portaudio"
   depends_on "readline"
+
+  on_macos do
+    depends_on "gettext"
+  end
+
+  on_linux do
+    depends_on "alsa-lib"
+    depends_on "jack"
+    depends_on "systemd"
+  end
 
   resource "homebrew-test" do
     url "https://upload.wikimedia.org/wikipedia/commons/6/61/Drum_sample.mid"
@@ -30,18 +40,56 @@ class FluidSynth < Formula
   end
 
   def install
-    args = std_cmake_args + %w[
-      -Denable-framework=OFF
-      -Denable-portaudio=ON
-      -DLIB_SUFFIX=
-      -Denable-dbus=OFF
-      -Denable-sdl2=OFF
-    ]
+    system "cmake", "-S", ".", "-B", "build",
+                    "-Denable-alsa=#{OS.linux?}",
+                    "-Denable-aufile=ON",
+                    "-Denable-coverage=OFF",
+                    "-Denable-coreaudio=#{OS.mac?}",
+                    "-Denable-coremidi=#{OS.mac?}",
+                    "-Denable-dart=OFF",
+                    "-Denable-dbus=OFF",
+                    "-Denable-dsound=OFF",
+                    "-Denable-floats=OFF",
+                    "-Denable-fpe-check=OFF",
+                    "-Denable-framework=OFF",
+                    "-Denable-ipv6=ON",
+                    "-Denable-jack=#{OS.linux?}",
+                    "-Denable-ladspa=OFF",
+                    "-Denable-lash=OFF",
+                    "-Denable-libinstpatch=OFF",
+                    "-Denable-libsndfile=ON",
+                    "-Denable-midishare=OFF",
+                    "-Denable-network=ON",
+                    "-Denable-opensles=OFF",
+                    "-Denable-oboe=OFF",
+                    "-Denable-openmp=OFF",
+                    "-Denable-oss=OFF",
+                    "-Denable-pipewire=OFF",
+                    "-Denable-portaudio=ON",
+                    "-Denable-profiling=OFF",
+                    "-Denable-pulseaudio=OFF",
+                    "-Denable-readline=ON",
+                    "-Denable-sdl2=OFF",
+                    "-Denable-systemd=#{OS.linux?}",
+                    "-Denable-trap-on-fpe=OFF",
+                    "-Denable-threads=ON",
+                    "-Denable-ubsan=OFF",
+                    "-Denable-wasapi=OFF",
+                    "-Denable-waveout=OFF",
+                    "-Denable-winmidi=OFF",
+                    *std_cmake_args
 
-    mkdir "build" do
-      system "cmake", "..", *args
-      system "make", "install"
+    # On macOS, readline is keg-only so use the absolute path to its pc file
+    # uses_from_macos "readline" produces another error
+    # Related error: Package 'readline', required by 'fluidsynth', not found
+    if OS.mac?
+      inreplace "build/fluidsynth.pc",
+                "readline",
+                "#{Formula["readline"].opt_lib}/pkgconfig/readline.pc"
     end
+
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
 
     pkgshare.install "sf2"
   end
@@ -52,5 +100,8 @@ class FluidSynth < Formula
     wavout = testpath/"Drum_sample.wav"
     system bin/"fluidsynth", "-F", wavout, pkgshare/"sf2/VintageDreamsWaves-v2.sf2", testpath/"Drum_sample.mid"
     assert_predicate wavout, :exist?
+
+    # Check the pkg-config module
+    system "pkg-config", "--cflags", "--libs", "--static", lib/"pkgconfig/fluidsynth.pc"
   end
 end

@@ -1,8 +1,8 @@
 class Oil < Formula
   desc "Bash-compatible Unix shell with more consistent syntax and semantics"
   homepage "https://www.oilshell.org/"
-  url "https://www.oilshell.org/download/oil-0.12.5.tar.gz"
-  sha256 "e7fad0b14deb64fa28e9db40060dcfa8288f04f0f019acf8d15fc85b60ea5770"
+  url "https://www.oilshell.org/download/oil-0.14.2.tar.gz"
+  sha256 "993fcae34b9804d567030a11f59e271cc64ae33f4bd178c4dd161c65b69a4e63"
   license "Apache-2.0"
 
   livecheck do
@@ -11,14 +11,12 @@ class Oil < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "2079930421898c514a2da59fa6dfda59397f5db927c9f18394f66d29a637ae6d"
-    sha256 arm64_monterey: "a7308a9553f7f55c0cda7182612c0875f8c6a4a17103705671a9831b79ffbc5a"
-    sha256 arm64_big_sur:  "af1df7bb8ee26ce3cd7c6e142f6ea32b2da3c5b2f84fa4e2625456ef2d96f075"
-    sha256 ventura:        "84d915ebdf4a754943a8d0856ee564bdc697f1779ebfc0a6bb6c6b3d12a62a11"
-    sha256 monterey:       "aaa395c37c92e5973470ecc6562efb8c26a1a60fa15b693633ad500c075dbbb5"
-    sha256 big_sur:        "b5cae372631f127c873c1f39c048d5330420b6e7d48841db8f1d27a9522b2b0b"
-    sha256 catalina:       "c68663d0b15935329bc228454102cd7db844a17bd305decb672f2dad3607d19e"
-    sha256 x86_64_linux:   "5737d146a46cd681452de528d1e71800eaa533453ae06a4bf52fa5bcd74a7b6e"
+    sha256 arm64_ventura:  "008d367d1aca567fde8a976624337d4e415383d4f93dbb6fceb4669869c9b42c"
+    sha256 arm64_monterey: "7ae8c386955d589bb89a97a0f3159eea567ac0fb0130c9725ff9380064f2f91b"
+    sha256 arm64_big_sur:  "21c16970a1147b1ea45c5ab49668969981072e20ad402c56b57af93e992df660"
+    sha256 ventura:        "b25011cfba4abd2cc0d5987e12d79a7b29e17ef8e8568f4d2a02275666bc1fb9"
+    sha256 monterey:       "920c3a7e9c5fe8995531cb909370cf57006d406e2979026bbf7820102d6d7392"
+    sha256 big_sur:        "6958ddfb8b42edcbfbe0e857585dd91267d59b26c44134c4a57cd2c0a7186379"
   end
 
   depends_on "readline"
@@ -27,6 +25,7 @@ class Oil < Formula
 
   def install
     system "./configure", "--prefix=#{prefix}",
+                          "--datarootdir=#{share}",
                           "--with-readline=#{Formula["readline"].opt_prefix}"
     system "make"
     system "./install"

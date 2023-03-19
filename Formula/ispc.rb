@@ -1,26 +1,25 @@
 class Ispc < Formula
   desc "Compiler for SIMD programming on the CPU"
   homepage "https://ispc.github.io"
-  url "https://github.com/ispc/ispc/archive/v1.18.1.tar.gz"
-  sha256 "5b004c121e7a39c8654bb61930a240e4bd3e432a80d851c6281fae49f9aca7b7"
+  url "https://github.com/ispc/ispc/archive/v1.19.0.tar.gz"
+  sha256 "da1eccb8ead495b22d642340f3bab11fb64dd2223cd9cc92f0492f70b30f34b5"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "fae2e3b3e49e198d644de5d41d1072b1eec914de46023f59cb193cc24611e8ef"
-    sha256 cellar: :any,                 arm64_monterey: "a4cfc73e0e1cef6223f187f27ce34a503ceaa71dbed5d1a7e19763af2781b4de"
-    sha256 cellar: :any,                 arm64_big_sur:  "1dd45f53ecf4aed0641eccf04c30c9369ce77748d4d243f0dce23cc166ef853c"
-    sha256 cellar: :any,                 ventura:        "0d27a32c440fa6a4f065573cc681ca72b5710f7bdc09795631211b868d3495e5"
-    sha256 cellar: :any,                 monterey:       "f692c4a3b61a4118bfbef17d689801b8e602bf18b8ee6ce4ad8cb1a1a45b37f6"
-    sha256 cellar: :any,                 big_sur:        "b34d180813b2dec88159f38354f74c773814c0828a24cc10f81e0cd03ca9ab29"
-    sha256 cellar: :any,                 catalina:       "0efb592a2b306bf3cc1da19e5ea4455230ef1cb3699b0eb50acd15fea111698d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2a9d579f863fb0da48795d2dd53df68de831b149f43a1281f26298bd893fc08f"
+    sha256 cellar: :any,                 arm64_ventura:  "73dc26931edbce4a2f9e76fc7c3e11b43de11ff7a333fcb985969374a217217f"
+    sha256 cellar: :any,                 arm64_monterey: "ff58159133be644a8b0677ae391f53201da51d387c680129ab8efa351dd71717"
+    sha256 cellar: :any,                 arm64_big_sur:  "a1d60c32a7f0426a198c30b5b749d6743d81b4855a98d17f771b4a0612d51096"
+    sha256 cellar: :any,                 ventura:        "73362d00ab907d2c26323e5eb8d084926a69c3a827da0d7d10271c08d262ef71"
+    sha256 cellar: :any,                 monterey:       "f440acacee5270ffa3d52735c4b6ffb27964b1f26efa4839c451312c5ed78535"
+    sha256 cellar: :any,                 big_sur:        "500ce070914204913eb8dd87af63336b28d4494d27a31baa0dd13b1adad6a458"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c3d4781c7ae9ca06963145cfaff51bdaa48530de5399abbf6bfee4fdf46f84fb"
   end
 
   depends_on "bison" => :build
   depends_on "cmake" => :build
   depends_on "flex" => :build
-  depends_on "python@3.10" => :build
-  depends_on "llvm@14"
+  depends_on "python@3.11" => :build
+  depends_on "llvm"
 
   fails_with gcc: "5"
 
@@ -36,20 +35,18 @@ class Ispc < Formula
     # Disable building of i686 target on Linux, which we do not support.
     inreplace "cmake/GenerateBuiltins.cmake", "set(target_arch \"i686\")", "return()" unless OS.mac?
 
-    args = std_cmake_args + %W[
+    args = %W[
       -DISPC_INCLUDE_EXAMPLES=OFF
       -DISPC_INCLUDE_TESTS=OFF
       -DISPC_INCLUDE_UTILS=OFF
-      -DLLVM_TOOLS_BINARY_DIR='#{llvm.opt_bin}'
-      -DISPC_NO_DUMPS=ON
-      -DARM_ENABLED=#{Hardware::CPU.arm? ? "ON" : "OFF"}
+      -DLLVM_TOOLS_BINARY_DIR=#{llvm.opt_bin}
     ]
+    # We can target ARM for free on macOS, so let's use the upstream default there.
+    args << "-DARM_ENABLED=OFF" if OS.linux? && Hardware::CPU.intel?
 
-    mkdir "build" do
-      system "cmake", *args, ".."
-      system "make"
-      system "make", "install"
-    end
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do
@@ -74,7 +71,7 @@ class Ispc < Formula
       target = "sse2"
     end
     system bin/"ispc", "--arch=#{arch}", "--target=#{target}", testpath/"simple.ispc",
-      "-o", "simple_ispc.o", "-h", "simple_ispc.h"
+                       "-o", "simple_ispc.o", "-h", "simple_ispc.h"
 
     (testpath/"simple.cpp").write <<~EOS
       #include "simple_ispc.h"

@@ -6,6 +6,7 @@ class Cryptominisat < Formula
   # Everything that's needed to run/build/install/link the system is MIT licensed. This allows
   # easy distribution and running of the system everywhere.
   license "MIT"
+  revision 1
 
   livecheck do
     url :stable
@@ -13,22 +14,21 @@ class Cryptominisat < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "4ed00a60028407fdf43e94925600a48d17f17e25033699ab3a54f62bef5694fc"
-    sha256 cellar: :any,                 arm64_monterey: "a37911641a25c49ef4a4152531c93679f4c42694688d7695e84b31fd0f56df4a"
-    sha256 cellar: :any,                 arm64_big_sur:  "c30ac0d1f97c3138a1d75c8519718c38d9481237ef891a4aa9991de796db2927"
-    sha256 cellar: :any,                 ventura:        "59efec02543f565ec7edbc547b2162659f3a8802fe955d3257efa3affb038827"
-    sha256 cellar: :any,                 monterey:       "8432fed87a785122585fcbee69a3256fcb9c537cbd6d6a404d63226a5b15262e"
-    sha256 cellar: :any,                 big_sur:        "c4ff5942f8bfccf27d37065f8b010b72fca214641f20530ae4b95831e48d1826"
-    sha256 cellar: :any,                 catalina:       "ef55bbbfe712fe39128d4abbd1cf023a2b496b1e92029de0ea32ce5fb13914a2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5b469605be2c28104303217c39f752079c51e887b245c306ff831ccb9051a62f"
+    sha256 cellar: :any,                 arm64_ventura:  "ebe5f3d813bd94d6366080733cd6a8b61ae2dc1bf243ee57dca8678b551d7bd6"
+    sha256 cellar: :any,                 arm64_monterey: "caf7fa1899076b2d98333f253505d802ec14b834f9915fdfbea51a4d525444e3"
+    sha256 cellar: :any,                 arm64_big_sur:  "31f3b36598745c142f428451dde74430228e23c737222de2b5e743ab8f163d44"
+    sha256 cellar: :any,                 ventura:        "1f223253304a9c846df31077bce73ed3451c000f96acefcd3a51cf52840c9ed9"
+    sha256 cellar: :any,                 monterey:       "a790c4ddfe4eeda555979d5a89e05ac976881287698613aa8b966a108503533e"
+    sha256 cellar: :any,                 big_sur:        "1ed4e6fef5258653335a460ef1d8aa9c6d4c8fd03b507ac7dc9ce8b985a9d53c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fbbfec94567e6c6a80f7670eae3b4838d8a90d955a92f58325fcece79212dac9"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.10" => [:build, :test]
+  depends_on "python@3.11" => [:build, :test]
   depends_on "boost"
 
   def python3
-    "python3.10"
+    "python3.11"
   end
 
   def install

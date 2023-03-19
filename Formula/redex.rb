@@ -2,10 +2,10 @@ class Redex < Formula
   include Language::Python::Shebang
 
   desc "Bytecode optimizer for Android apps"
-  homepage "https://fbredex.com"
+  homepage "https://github.com/facebook/redex"
   license "MIT"
-  revision 10
-  head "https://github.com/facebook/redex.git", branch: "master"
+  revision 11
+  head "https://github.com/facebook/redex.git", branch: "main"
 
   stable do
     url "https://github.com/facebook/redex/archive/v2017.10.31.tar.gz"
@@ -38,14 +38,13 @@ class Redex < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "6cabce85f406715881eff64761cc37403708c045dc12a4560ead729fdd7adabe"
-    sha256 cellar: :any,                 arm64_monterey: "57f1b1dbdcfb11cc7be567585e03be4d18447fd62dc16034e760d8a8deec953b"
-    sha256 cellar: :any,                 arm64_big_sur:  "9e71e3e44041091e69fbec81fc7d44175b6ee4b2cd557f1ca02791dcd85e6a03"
-    sha256 cellar: :any,                 ventura:        "1c4f62eb7643bb8742bd318adab80d4e8434c8c561e3491c08525d78dce8b533"
-    sha256 cellar: :any,                 monterey:       "7daf7985fe65c3b64225ab66a90a6eba481c83f2b3c053a81d6068b54eff8184"
-    sha256 cellar: :any,                 big_sur:        "607440410a36514ec409e5d95527ca0686e6447b1eb4016325acbdaa5645c743"
-    sha256 cellar: :any,                 catalina:       "34404258648e99e63d7f64ea732d658beb1d2b971d93cf9ddcc25b74cdfa10cb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "31b6e3691c62ff5de9087e25886f3e5bbc3a135b9d377fe1aff6f8284f65ddc2"
+    sha256 cellar: :any,                 arm64_ventura:  "6d3d155e117f7a2e5cd7200bdede85572744ff805cfdaa9a7f27a3084367288a"
+    sha256 cellar: :any,                 arm64_monterey: "a07bb521610257a1302d9bbb70b11de44b6c70df68e00190f249b694988e7010"
+    sha256 cellar: :any,                 arm64_big_sur:  "73fd498ba524766ec8c22b24eacf164313681074a0b0c3c5be17690f89380013"
+    sha256 cellar: :any,                 ventura:        "a777a520371a2dcd654c58733bd76470e1453591beb1d7ec8a692ae79b4fed59"
+    sha256 cellar: :any,                 monterey:       "36a0611642cc30608c7c18299bc747784da2bc9ecccfac3e764574d4275b52d2"
+    sha256 cellar: :any,                 big_sur:        "1a6d2353a09ddd1061a290ff9380df2c527a494049cbb3bdbb76f9e8c24adc2c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7cedeae0e199fbb965ed889107b00bf1f21f5c214d50917f6c7795b906a0a77c"
   end
 
   depends_on "autoconf" => :build
@@ -54,16 +53,21 @@ class Redex < Formula
   depends_on "libtool" => :build
   depends_on "boost"
   depends_on "jsoncpp"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
-  resource "test_apk" do
+  resource "homebrew-test_apk" do
     url "https://raw.githubusercontent.com/facebook/redex/fa32d542d4074dbd485584413d69ea0c9c3cbc98/test/instr/redex-test.apk"
     sha256 "7851cf2a15230ea6ff076639c2273bc4ca4c3d81917d2e13c05edcc4d537cc04"
   end
 
   def install
-    # https://github.com/facebook/redex/issues/457
-    inreplace "Makefile.am", "/usr/include/jsoncpp", Formula["jsoncpp"].opt_include
+    if build.stable?
+      # https://github.com/facebook/redex/issues/457
+      inreplace "Makefile.am", "/usr/include/jsoncpp", Formula["jsoncpp"].opt_include
+      # Work around missing include. Fixed upstream but code has been refactored
+      # Ref: https://github.com/facebook/redex/commit/3f4cde379da4657068a0dbe85c03df558854c31c
+      ENV.append "CXXFLAGS", "-include set"
+    end
 
     python_scripts = %w[
       apkutil
@@ -78,14 +82,16 @@ class Redex < Formula
     rewrite_shebang detected_python_shebang, *python_scripts
 
     system "autoreconf", "--force", "--install", "--verbose"
-    system "./configure", *std_configure_args, "--with-boost=#{Formula["boost"].opt_prefix}"
+    system "./configure", *std_configure_args,
+                          "--disable-silent-rules",
+                          "--with-boost=#{Formula["boost"].opt_prefix}"
     system "make"
     system "make", "install"
   end
 
   test do
-    testpath.install resource("test_apk")
-    system "#{bin}/redex", "--ignore-zipalign", "redex-test.apk", "-o", "redex-test-out.apk"
+    testpath.install resource("homebrew-test_apk")
+    system bin/"redex", "--ignore-zipalign", "redex-test.apk", "-o", "redex-test-out.apk"
     assert_predicate testpath/"redex-test-out.apk", :exist?
   end
 end

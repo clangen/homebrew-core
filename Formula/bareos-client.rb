@@ -1,8 +1,8 @@
 class BareosClient < Formula
   desc "Client for Bareos (Backup Archiving REcovery Open Sourced)"
   homepage "https://www.bareos.org/"
-  url "https://github.com/bareos/bareos/archive/Release/21.1.6.tar.gz"
-  sha256 "da883c7d8ded422dfc8fd9ab8467c3d79faf0d9b367328de7860ab85e1507172"
+  url "https://github.com/bareos/bareos/archive/Release/22.0.2.tar.gz"
+  sha256 "70658b2ffb58599cd8f5eb0d700c07b112a618866c9d941f784c04be16924cfb"
   license "AGPL-3.0-only"
 
   livecheck do
@@ -11,13 +11,13 @@ class BareosClient < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_ventura:  "6a7c8eb1e58e66920d4f3fd61261979452ef3d77d6d1f301b4d60c9693ea5406"
-    sha256 cellar: :any, arm64_monterey: "ee1e7a11d5a1baf0349ded5e412a8d1b4bd8344e11d507d2a39cc6c43fdda849"
-    sha256 cellar: :any, arm64_big_sur:  "f1ccf5e63e388372fad315f56427ed49ecb9110636d5437253907984a9ce650d"
-    sha256 cellar: :any, ventura:        "f0c9c7a88f80433a6d3464580a550982d7893623b4191149d6f8ff2b536cbd8d"
-    sha256 cellar: :any, monterey:       "6f9388b0b0bd05562ce6586ccb1af830d386b62447ae07f5a6f63b48f72c4dfb"
-    sha256 cellar: :any, big_sur:        "729711ab587ccd5342eba3fd5e6d76bab59aef3a8cd85cf8f4ed2124904e90ea"
-    sha256               x86_64_linux:   "758ec8851a851efd5e8c7762ee6ee4e80460143a152c67b8e4b5cdc66d0c28e0"
+    sha256 arm64_ventura:  "11db9e64da397b206bb93979bc5680438c7771393c86c9186b265611ea4a96fb"
+    sha256 arm64_monterey: "096213ed7d05ec2cbdfdbd0412158e616aa69c52d1379a5167f706f6363bd69b"
+    sha256 arm64_big_sur:  "0d57ffd282865aa9cd28e482b1087a1eda508ac935736901ead4c3e7a2c83a52"
+    sha256 ventura:        "e47bb2c79d69670f1989d5880e0881c08c89fadd193fbc61564ea74f579221a7"
+    sha256 monterey:       "6aeb7c540d9411e9da68c1aa3a4df77def6bb09987ed26cda91a3a501304c006"
+    sha256 big_sur:        "ad0251f4962266b14521af06cda449854094785f8074107ede6ccfc4cd9828eb"
+    sha256 x86_64_linux:   "605dbfedf560f2523127837679768094e3065b59b6e68be74eca50617fcc7c26"
   end
 
   depends_on "cmake" => :build
@@ -39,10 +39,14 @@ class BareosClient < Formula
   conflicts_with "bacula-fd", because: "both install a `bconsole` executable"
 
   def install
-    # Work around Linux build failure by disabling warning:
+    # Work around Linux build failure by disabling warnings:
     # lmdb/mdb.c:2282:13: error: variable 'rc' set but not used [-Werror=unused-but-set-variable]
-    # TODO: Try to remove in the next release which has various compiler warning changes
-    ENV.append_to_cflags "-Wno-unused-but-set-variable" if OS.linux?
+    # fastlzlib.c:512:63: error: unused parameter ‘output_length’ [-Werror=unused-parameter]
+    # Upstream issue: https://bugs.bareos.org/view.php?id=1504
+    if OS.linux?
+      ENV.append_to_cflags "-Wno-unused-but-set-variable"
+      ENV.append_to_cflags "-Wno-unused-parameter"
+    end
 
     # Work around hardcoded paths to /usr/local Homebrew installation,
     # forced static linkage on macOS, and openssl formula alias usage.
@@ -92,16 +96,16 @@ class BareosClient < Formula
     end
   end
 
-  plist_options startup: true
   service do
     run [opt_sbin/"bareos-fd", "-f"]
+    require_root true
     log_path var/"run/bareos-fd.log"
     error_log_path var/"run/bareos-fd.log"
   end
 
   test do
     # Check if bareos-fd starts at all.
-    assert_match version.to_s, shell_output("#{sbin}/bareos-fd -? 2>&1", 1)
+    assert_match version.to_s, shell_output("#{sbin}/bareos-fd -? 2>&1")
     # Check if the configuration is valid.
     system sbin/"bareos-fd", "-t"
   end

@@ -4,25 +4,27 @@ class Libxcb < Formula
   url "https://xcb.freedesktop.org/dist/libxcb-1.15.tar.gz"
   sha256 "1cb65df8543a69ec0555ac696123ee386321dfac1964a3da39976c9a05ad724d"
   license "MIT"
+  revision 1
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_ventura:  "1c61b275a2a61d1f0d089e7c0836e3515f0d344726ff5098f7ae550577b47b4a"
-    sha256 cellar: :any,                 arm64_monterey: "0cdfcc168853b8f09f431c1790ae9b8de5d8567b5fab5381f26af300bb7dc5b3"
-    sha256 cellar: :any,                 arm64_big_sur:  "6bf77051114dec12e0c541bc478d7833a992792047553fc821f3e1a17b82ec38"
-    sha256 cellar: :any,                 ventura:        "87313e4ffe14ad6a8495a2b909963625886a82869e4463c7dc26ee803ad8d23a"
-    sha256 cellar: :any,                 monterey:       "3847eca62ce6198e7a728df8ae431f628091fb8e83956efdc9d527f4d2795ef3"
-    sha256 cellar: :any,                 big_sur:        "c1436addb2cb20e446f6147c10752e517336245b6dcdd946273537e60aa040eb"
-    sha256 cellar: :any,                 catalina:       "035b1d299e3f1b41581e759981cf9a83aee2754c4b744cdcad4c7fe32de83ffb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b8e96bb6f8a1e84ddc0b7e32ca3bd3ae05e4006785ca58b8356db00bd81879fa"
+    sha256 cellar: :any,                 arm64_ventura:  "cf7a5932142b247a4af6b7681ac44b74e16081806e651640e3ae460df08d71a7"
+    sha256 cellar: :any,                 arm64_monterey: "8a0df37f2087ac271ae9780b2db056b4a75f2090a535ac7c9560944d295962db"
+    sha256 cellar: :any,                 arm64_big_sur:  "42b2a0a1eee03d44c137195a485153f4a185bac30f64c5fffe28576fc8bbc611"
+    sha256 cellar: :any,                 ventura:        "9db0c9b29509ebae89d9592d3afe997f12949b3e96ea13661cf2080552aecf59"
+    sha256 cellar: :any,                 monterey:       "668eb7405f2bc6e32007e3c4ee40adb88c1e26db47c3389aa8719bd4b5c7f8f1"
+    sha256 cellar: :any,                 big_sur:        "ba2af806eddb9db3f65ab2c462d749fbadd03dd30d1ee6c5493ee466855dcae2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "37069aebf6799c5799d31ea9b6a25549726260b583cc6657bc858f4cd32c2f55"
   end
 
   depends_on "pkg-config" => :build
   depends_on "python@3.11" => :build # match version in `xcb-proto`
   depends_on "xcb-proto" => :build
-  depends_on "libpthread-stubs"
   depends_on "libxau"
   depends_on "libxdmcp"
+
+  # Drop libpthread-stubs on macOS
+  # remove in next release
+  patch :DATA
 
   def install
     python3 = "python3.11"
@@ -98,3 +100,18 @@ class Libxcb < Formula
     assert_equal 0, $CHILD_STATUS.exitstatus
   end
 end
+
+__END__
+diff --git a/configure b/configure
+index 2503d4b..0c36685 100755
+--- a/configure
++++ b/configure
+@@ -20662,7 +20662,7 @@ printf "%s\n" "yes" >&6; }
+ fi
+ NEEDED="xau >= 0.99.2"
+ case $host_os in
+-linux*) ;;
++linux*|darwin*) ;;
+      *) NEEDED="$NEEDED pthread-stubs" ;;
+ esac
+ 

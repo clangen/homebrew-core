@@ -1,20 +1,19 @@
 class Nfpm < Formula
   desc "Simple deb and rpm packager"
   homepage "https://nfpm.goreleaser.com/"
-  url "https://github.com/goreleaser/nfpm/archive/v2.22.2.tar.gz"
-  sha256 "84871d898cf25cbcdccbbe3ca7f68e11a3de89a34eb3b5212091ae73ad207ba5"
+  url "https://github.com/goreleaser/nfpm/archive/v2.26.0.tar.gz"
+  sha256 "63774508d2610a61ddcfc0a15c7f67c690dad1c50725ea16b6470486ea604c80"
   license "MIT"
   head "https://github.com/goreleaser/nfpm.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "6996d9175434931d063f8788fc4bcb08e0ada4ad51ade993e48d98517b63a852"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "1674a001e6206f7a9d1666705201fc661f29b26ba6bec034533bec9132f434f5"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "87c91c220c86c4638ff74589806192a1cafb30d73803f5330ba12e0cfc76458c"
-    sha256 cellar: :any_skip_relocation, ventura:        "b1989d3eaa5205ff70e2c92d5acefcb7272ed843c06c233418d101a2adf7a0be"
-    sha256 cellar: :any_skip_relocation, monterey:       "9b94f82ebef58cc0cfe9ae55fb733ee6549e8af2706a25a1c4884402733ab7b9"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9549bdc28c0e954648c396f2d7fb547fa43f9076572d86a3869f6872ef64dcda"
-    sha256 cellar: :any_skip_relocation, catalina:       "07ba6410d7d95cea2652fa9f48d53ff3c3978b85283db07ee79c04e6c49d4cc1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "204b6177fdf4c3bd0547e07daf863027c7db32ddbd2a2c18507ced0f4fe40d1b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ec938f513669aca24c25dffa0255d7bf7ce98b7e2789e3d97afd5dd7195fd626"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "2a5b4f068f39c0311531fb1881f4da4345bfa1469a3df272d382f2b128771ea6"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0d149becce6213385628c4bfacacee85dbb7bfe66883d2d9ed19bf4bef047d7f"
+    sha256 cellar: :any_skip_relocation, ventura:        "d805e36b6ae88deb1cba30d2f38510ff1291bde49ce337dddd762cec3b66c9ea"
+    sha256 cellar: :any_skip_relocation, monterey:       "b094f207d3065391da153b37b66ed29f01e53ca51988bd54d0abd58c05c51ef6"
+    sha256 cellar: :any_skip_relocation, big_sur:        "7873f9394d398f9486bce5340c42eef1e2bece1c2389178b6cefa0883e02c3a8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c70bcd2fa7782f3e9de5d2b287da72e8eed105c4b495d2f565339a09611c1122"
   end
 
   depends_on "go" => :build
@@ -30,7 +29,7 @@ class Nfpm < Formula
       shell_output("#{bin}/nfpm --version 2>&1")
 
     system bin/"nfpm", "init"
-    assert_match "nfpm example config file", File.read(testpath/"nfpm.yaml")
+    assert_match "nfpm example configuration file", File.read(testpath/"nfpm.yaml")
 
     # remove the generated default one
     # and use stubbed one for another test

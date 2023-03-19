@@ -7,8 +7,8 @@ class Mesa < Formula
   head "https://gitlab.freedesktop.org/mesa/mesa.git", branch: "main"
 
   stable do
-    url "https://mesa.freedesktop.org/archive/mesa-22.3.1.tar.xz"
-    sha256 "3c9cd611c0859d307aba0659833386abdca4c86162d3c275ba5be62d16cf31eb"
+    url "https://mesa.freedesktop.org/archive/mesa-22.3.6.tar.xz"
+    sha256 "4ec8ec65dbdb1ee9444dba72970890128a19543a58cf05931bd6f54f124e117f"
 
     patch do
       url "https://raw.githubusercontent.com/Homebrew/formula-patches/f0a40cf7d70ee5a25639b91d9a8088749a2dd04e/mesa/fix-build-on-macOS.patch"
@@ -17,25 +17,24 @@ class Mesa < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "3c4aa9a758e3438d51d662d28ab81ef9bf5ae061ed27d1b66f785b9da7552a58"
-    sha256 arm64_monterey: "f7fab0436d127b1b95d06999483661102bfbf4ca1adbbfd3716c38245fcb658e"
-    sha256 arm64_big_sur:  "71211f7472d1cad5d6afa36f589de42068fe1c55809ac25f14a764239ab212e0"
-    sha256 ventura:        "bf7474be76c322b07c1559a07523d5d739ddb5c42151f94fcf2ee6a4ffd0286c"
-    sha256 monterey:       "578f512fcc1ee3a2e131bf35e248f264cac3d8b6a1cc1e3f95c310a6b12a4e51"
-    sha256 big_sur:        "a3cc02119ae9630ff84c254dbd9a0e85905da8aaf0333bdad54df07b0ab5ce99"
-    sha256 x86_64_linux:   "c187824e8c4f540722f5f8f4690c657e02646e227358c9a798db291dabfffd8b"
+    sha256 arm64_ventura:  "78ff0ec3c6cf55e5d1ba90c2c0fe18ce49b8751bac823027f4a96b0110f76c08"
+    sha256 arm64_monterey: "44359d2253b1da9759a203cc086f5e7afa33dd489ecce8250e5b869d78b77c17"
+    sha256 arm64_big_sur:  "1524f6487d68a066ccc0e722b6d6cdea5c6e0202379ae646ec40e8859341b18c"
+    sha256 ventura:        "fb2c5772bb8d48e6d5c2d361362be7dbe0232c214a366ba73e457e1f66d9988b"
+    sha256 monterey:       "5acf9d9aaf2c7a7043c1e47e3792e5e6383aac48ba96266aaf77197cbe342c19"
+    sha256 big_sur:        "57282b092fc2132ad1d724bac7a39014295ad55478586d82db5741a6cd6a30af"
+    sha256 x86_64_linux:   "c02a17bf31d456217110de520fd65972b6873e1c7007bfbe725f9941074f3649"
   end
 
-  depends_on "bison" => :build # can't use form macOS, needs '> 2.3'
+  depends_on "bison" => :build # can't use from macOS, needs '> 2.3'
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
   depends_on "pygments" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "xorgproto" => :build
 
   depends_on "expat"
-  depends_on "gettext"
   depends_on "libx11"
   depends_on "libxcb"
   depends_on "libxdamage"
@@ -45,6 +44,10 @@ class Mesa < Formula
   uses_from_macos "llvm"
   uses_from_macos "ncurses"
   uses_from_macos "zlib"
+
+  on_macos do
+    depends_on "gettext"
+  end
 
   on_linux do
     depends_on "elfutils"
@@ -71,13 +74,13 @@ class Mesa < Formula
   end
 
   resource "MarkupSafe" do
-    url "https://files.pythonhosted.org/packages/1d/97/2288fe498044284f39ab8950703e88abbac2abbdf65524d576157af70556/MarkupSafe-2.1.1.tar.gz"
-    sha256 "7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"
+    url "https://files.pythonhosted.org/packages/95/7e/68018b70268fb4a2a605e2be44ab7b4dd7ce7808adae6c5ef32e34f4b55a/MarkupSafe-2.1.2.tar.gz"
+    sha256 "abcabc8c2b26036d62d4c746381a6f7cf60aafcc653198ad678306986b09450d"
   end
 
   resource "glxgears.c" do
-    url "https://gitlab.freedesktop.org/mesa/demos/-/raw/db5ad06a346774a249b22797e660d55bde0d9571/src/xdemos/glxgears.c"
-    sha256 "3873db84d708b5d8b3cac39270926ba46d812c2f6362da8e6cd0a1bff6628ae6"
+    url "https://gitlab.freedesktop.org/mesa/demos/-/raw/caac7be425a185e191224833375413772c4aff8d/src/xdemos/glxgears.c"
+    sha256 "344a03aff01708350d90603fd6b841bccd295157670f519b459bbf3874acf847"
   end
 
   resource "gl_wrap.h" do
@@ -87,7 +90,7 @@ class Mesa < Formula
 
   def install
     venv_root = buildpath/"venv"
-    venv = virtualenv_create(venv_root, "python3.10")
+    venv = virtualenv_create(venv_root, "python3.11")
 
     %w[Mako MarkupSafe].each do |res|
       venv.pip_install resource(res)
@@ -101,21 +104,21 @@ class Mesa < Formula
       args += %w[
         -Dplatforms=x11,wayland
         -Dglx=auto
-        -Ddri3=true
+        -Ddri3=enabled
         -Dgallium-drivers=auto
         -Dgallium-omx=disabled
-        -Degl=true
-        -Dgbm=true
+        -Degl=enabled
+        -Dgbm=enabled
         -Dopengl=true
         -Dgles1=enabled
         -Dgles2=enabled
-        -Dvalgrind=false
+        -Dvalgrind=disabled
         -Dtools=drm-shim,etnaviv,freedreno,glsl,nir,nouveau,lima
       ]
     end
 
-    system "meson", "build", *args, *std_meson_args
-    system "meson", "compile", "-C", "build"
+    system "meson", "setup", "build", *args, *std_meson_args
+    system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
     inreplace lib/"pkgconfig/dri.pc" do |s|
       s.change_make_var! "dridriverdir", HOMEBREW_PREFIX/"lib/dri"

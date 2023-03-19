@@ -3,26 +3,24 @@ class Folderify < Formula
 
   desc "Generate pixel-perfect macOS folder icons in the native style"
   homepage "https://github.com/lgarron/folderify"
-  url "https://files.pythonhosted.org/packages/68/03/a4834a40d95a0bc2debdbad7e0e1bf909a95ff68c0a64098ea52f6ccb794/folderify-2.3.1.tar.gz"
-  sha256 "0927c9453dc8efb6ea4addb0eee2711528152045f22d411c9de1e7f45621f06c"
+  url "https://files.pythonhosted.org/packages/4c/18/a4d6491e4f64cbff4821cefa9fec1cfcb3048e19fc806d7e9af876654b94/folderify-2.4.0.tar.gz"
+  sha256 "daf1f5c64d59528d61d5a223d9ad2ba8f0e10ffd0d9cc2286ccd65b7fa516c24"
   license "MIT"
-  revision 1
   head "https://github.com/lgarron/folderify.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "cd3aeb5647cf823634c8d5ddeea89e3ea5f5a0c1d63953a26dcf47c2c14784b1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b35bc64a01041e596b159c71533eb632ad3d2a278b3f850d5bc2dea5ff5b542c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "4b9491bd61efa21a3fb11de4048bf3976549737f5519fa9c8707d3d29aa88495"
-    sha256 cellar: :any_skip_relocation, ventura:        "9a1ccdc83f2e7212e30c3bc8a9762a23b705c62e13d96cbc6a618f2462eb1c6f"
-    sha256 cellar: :any_skip_relocation, monterey:       "d494fd1ad63d3dbee0d088fea5ccaaea738f790a4c0017f60d1c9933cfa6dc57"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1c35e9f509ca6b82360b58f5ce7ddf8f08f2922ac88357e298846849400cab8a"
-    sha256 cellar: :any_skip_relocation, catalina:       "f77da3ff2274fcff4d3fec345b63f31d8d2eb21b9d59a59f1b9e236b3567fc3a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a2b1e1d23423c152acb05f34a26cd5e6c5480116bc63a2868cef9659f1a42837"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c42d0a7a535288bd8479f5071e8a973e8027bcaa259437667b20c50a2c4b9285"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "5bb8a9116732629a9698c44f2f533560a325dcd7a1eadbfbc7473598e07889da"
+    sha256 cellar: :any_skip_relocation, ventura:        "d6e1ee0027d66edcb184e0f8653d7bcea684dd511881c5bab69876d053dff8a6"
+    sha256 cellar: :any_skip_relocation, monterey:       "d6e1ee0027d66edcb184e0f8653d7bcea684dd511881c5bab69876d053dff8a6"
+    sha256 cellar: :any_skip_relocation, big_sur:        "1a714d0ecddc788eae807a62b55dcd6f7d5d864a3b0da91ba3446dfb5d6b9337"
   end
 
   depends_on xcode: :build
   depends_on "imagemagick"
   depends_on :macos
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   resource "osxiconutils" do
     url "https://github.com/sveinbjornt/osxiconutils.git",
@@ -30,7 +28,7 @@ class Folderify < Formula
   end
 
   def python3
-    "python3.10"
+    "python3.11"
   end
 
   def install
@@ -59,7 +57,7 @@ class Folderify < Formula
       "icon.png",
     )
     # folderify applies the test icon to a folder
-    system "folderify", "icon.png", testpath.to_s
+    system bin/"folderify", "icon.png", testpath.to_s
     # Tests for the presence of the file icon
     assert_predicate testpath / "Icon\r", :exist?
   end

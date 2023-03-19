@@ -6,10 +6,10 @@ class Cryfs < Formula
   url "https://github.com/cryfs/cryfs/releases/download/0.11.3/cryfs-0.11.3.tar.gz"
   sha256 "cffef7669b8cbec3e7420088faac492390b9e1f3d3d0dc2a245b87f8df05f190"
   license "LGPL-3.0"
-  revision 1
+  revision 2
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "5cf540a20c6bba381ab58a3b2c4b09abe03d0807b972bc323cd11d4ea63e835b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "998aed8cbec6408a24741d7b6ca69a7f85aed5d6b4bdc66d80755aa288b5191a"
   end
 
   head do
@@ -23,7 +23,7 @@ class Cryfs < Formula
   depends_on "libfuse@2"
   depends_on :linux # on macOS, requires closed-source macFUSE
   depends_on "openssl@1.1"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "range-v3"
   depends_on "spdlog"
 
@@ -35,7 +35,7 @@ class Cryfs < Formula
   end
 
   def install
-    python = "python3.10"
+    python = "python3.11"
     venv_root = buildpath/"venv"
 
     venv = virtualenv_create(venv_root, python)

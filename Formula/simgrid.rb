@@ -6,6 +6,7 @@ class Simgrid < Formula
   url "https://framagit.org/simgrid/simgrid/uploads/c45f7fd6872b3b0d26b9ba2e607d6e3a/simgrid-3.32.tar.gz"
   sha256 "837764eb81562f04e49dd20fbd8518d9eb1f94df00a4e4555e7ec7fa8aa341f0"
   license "LGPL-2.1-only"
+  revision 1
 
   livecheck do
     url :homepage
@@ -13,21 +14,20 @@ class Simgrid < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "b74f6093252d75c5a740206d86304fd1fdbd469195bb721633b06728fdf7a1de"
-    sha256 arm64_monterey: "33cd6310a7561485629e64827eadb35ddcbbb0183a82fa26fb2a0afaf3aac42a"
-    sha256 arm64_big_sur:  "8cdde2925ecc32a83433b1b077cc114471c3cbf1d5046022872719c0bc34a8cb"
-    sha256 ventura:        "8dc7954e386e31c0f63987aaabb41d6e53549a63ab91f423c9fa8f56df3e5032"
-    sha256 monterey:       "f2af0a304c585be6c96ce0ad91d1a42f8064788575076945ab5158b43242b1cf"
-    sha256 big_sur:        "b01a3a6c1282a3cec1c34bbe413906b4035ff240d77728f6b2b9d29d4b1c1cb1"
-    sha256 catalina:       "63276e960125d3e3a7ad3f505c86fbce9c867a9ee7661fa5c4e7374f71af7838"
-    sha256 x86_64_linux:   "aa55ed3f96e318693e5e71fcd780a5bfd7bbc85b6269dd29cbdb3e04c9ef03ab"
+    sha256 arm64_ventura:  "cde014b5c6bbef517b1f29e4331c8da6dcdc8be1892947a1df6616f37acd0c47"
+    sha256 arm64_monterey: "9829c665994f240fe09de35511d2bde57bcb4a9ada5c78c3c480288ac323b5b9"
+    sha256 arm64_big_sur:  "94d0d5a6227e6eb3853ebfbf23cd7ba631d7a409ff499627e09c087d1cf7f5f9"
+    sha256 ventura:        "3d3d9ea2c40492b40b18de837f8e22c3c8354dddca5e0ca997e32527e66755b4"
+    sha256 monterey:       "f4ca28891e2a6a525ea8a4294e926aadd4459f5be8471f6cac6691c45e6eab91"
+    sha256 big_sur:        "ea94cf083fdc223ccfd2ad2403081aa6417e89aad51311d31d9200787c975fad"
+    sha256 x86_64_linux:   "49e903beb6dfd877396afe3248bd8acd44f22a4956068116e524dc9a13bc806a"
   end
 
   depends_on "cmake" => :build
   depends_on "doxygen" => :build
   depends_on "boost"
   depends_on "graphviz"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   fails_with gcc: "5"
 

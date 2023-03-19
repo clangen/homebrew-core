@@ -3,19 +3,24 @@ require "language/node"
 class Kubevious < Formula
   desc "Detects and prevents Kubernetes misconfigurations and violations"
   homepage "https://github.com/kubevious/cli"
-  url "https://registry.npmjs.org/kubevious/-/kubevious-1.0.45.tgz"
-  sha256 "2d8d1efd0d289fbfa5643cd42b9fe58d2addbc9f8385e02eeab80519ea48bafa"
+  url "https://registry.npmjs.org/kubevious/-/kubevious-1.0.53.tgz"
+  sha256 "5601a17c83787ad9d75d11a31ce9806fd3747ae4e2cc6970c2fba1d8960cf4c8"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ec66659af386cf56d9341bd2866fd9655ed11613893596e1429a76d790b2bbd0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "271f6824ceadfdc4a5d1806debfe7a6ad075b21d5458dd09a7c2f6e0b2a80bf9"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3a581cea9751709bc63151f1395d29d1f50333835d6f9a4dee00c742bd58e1ae"
-    sha256 cellar: :any_skip_relocation, ventura:        "53cc4d237364389f253b8f38674fb1718b764a7b27c27ccd902c931167833567"
-    sha256 cellar: :any_skip_relocation, monterey:       "7037f11b41dc7c48c6f18d070c5e6545da153c2cf1060b49e174f530084775cf"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9a547e2a3ccade9883f32790cdc1ab686b7fd0bac2a5200f953f2c5f373e071c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6fba58bae4b6d4096ed0538dbec701c2fc8e99896cbc914f136a56266c71785b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "796afecd0e43a82238b61c2a88cfa778e7515b37a5b2e6b14b4a2f0d05a81ca9"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "b2ee6a447fbc2564bcc77816b52706e938eaef2e88219db6547fd0a8485df807"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e8f11c2181ec2b9ff1790ab789d47ec1668d2072874e4a7a46e18d05cd97f33a"
+    sha256 cellar: :any_skip_relocation, ventura:        "5ba11487158cc27780d8ed4bec423ea3b410e1c5116a103510e2df0fd40401ec"
+    sha256 cellar: :any_skip_relocation, monterey:       "4a91a76a294143ca21b8a8d3aef952a8c25e3c9f0d350e3810854b237cf05fde"
+    sha256 cellar: :any_skip_relocation, big_sur:        "134e0f47a45bb24dc21665ccaf76b89ef12b64b6b6f82a6bedbcfadeb6139666"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "da31fe013744f20dcbc4680380525055eab1590f38059412c27039d27503adb7"
   end
+
+  # Match deprecation date of `node@14`.
+  # TODO: Remove if migrated to `node@18` or `node`. Update date if migrated to `node@16`.
+  # Issue ref: https://github.com/kubevious/cli/issues/8
+  deprecate! date: "2023-04-30", because: "uses deprecated `node@14`"
 
   # upstream issue to track node@18 support
   # https://github.com/kubevious/cli/issues/8

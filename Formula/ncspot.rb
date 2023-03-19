@@ -1,22 +1,21 @@
 class Ncspot < Formula
   desc "Cross-platform ncurses Spotify client written in Rust"
   homepage "https://github.com/hrkfdn/ncspot"
-  url "https://github.com/hrkfdn/ncspot/archive/v0.11.2.tar.gz"
-  sha256 "0fd9696e13912b906605e9972bf3b2a8a68688cce17478353713550801c94fab"
+  url "https://github.com/hrkfdn/ncspot/archive/v0.13.0.tar.gz"
+  sha256 "35210f8237a20eb894dc6b7cc517e60c82c2e93ff5940c267fe0bf673eccc411"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "4803e02911c69a60393a168a01da8db5cf7cabd021870521e24f60804a656d1b"
-    sha256 cellar: :any,                 arm64_monterey: "5e85be041e1f6282f54b2a39fb5a9a69da526fe072e2f5073d8d48a9cf64a84a"
-    sha256 cellar: :any,                 arm64_big_sur:  "14f82f6c712d08f1323db0645df34e15121a1c1aaea6e0e4533d5396c9b799d6"
-    sha256 cellar: :any,                 ventura:        "223cd6f0d0ef90365e81168871fc3133e823a7a5e13c5417e9ee09fed7265cae"
-    sha256 cellar: :any,                 monterey:       "13b8775762c5070ee174548988d5495041cedd886dba3637257076fa6da1c8fb"
-    sha256 cellar: :any,                 big_sur:        "1a77705e1b8b5b3706fee125b4e5dd098386fd78d870c654d81ba9c29b306382"
-    sha256 cellar: :any,                 catalina:       "5eccacc0e822a3b1943f2bbc51ed7694ec2cb59ea902e5583167137b10d094c1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d432f52dfc912a31948b811a026eb0dd2dc757d1cbb224a99d417ea13497a0c2"
+    sha256 cellar: :any,                 arm64_ventura:  "32aa26427656bc2d116cba446efe7a91d6bb1d2af0781497b7b87e1a5ff01a1a"
+    sha256 cellar: :any,                 arm64_monterey: "eeea5b4123eabedd64d32f5e64c507c446126ea598e28fa52a34cbc36f7a0715"
+    sha256 cellar: :any,                 arm64_big_sur:  "622e6514c18b3d48a746f3b337e1a93d239570bb70761cb36e76a669a8a732e9"
+    sha256 cellar: :any,                 ventura:        "a36427873618b3e0eb8f5cf237a8d8cdf8a289f3f12363004bfa7111d0ea7273"
+    sha256 cellar: :any,                 monterey:       "2a7e7f3b587a60a0a130fb7c91cd20709be426844243435f7b55167881d5cf20"
+    sha256 cellar: :any,                 big_sur:        "f6f27e8be0ea74b52df97aba66e231121faa3d00946171d2da6c64a24da3ed19"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "def5b0b8f8a1a1d1c35996321aca5d7a2e0368dc418e10fec1b8e288ed4c7af4"
   end
 
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "rust" => :build
   depends_on "portaudio"
 
@@ -27,7 +26,7 @@ class Ncspot < Formula
     depends_on "alsa-lib"
     depends_on "dbus"
     depends_on "libxcb"
-    depends_on "openssl@1.1" # Uses Secure Transport on macOS
+    depends_on "openssl@3" # Uses Secure Transport on macOS
   end
 
   def install

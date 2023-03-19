@@ -1,11 +1,11 @@
 class Curl < Formula
   desc "Get a file from an HTTP, HTTPS or FTP server"
   homepage "https://curl.se"
-  url "https://curl.se/download/curl-7.87.0.tar.bz2"
-  mirror "https://github.com/curl/curl/releases/download/curl-7_84_0/curl-7.87.0.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/curl-7.87.0.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/legacy/curl-7.87.0.tar.bz2"
-  sha256 "5d6e128761b7110946d1276aff6f0f266f2b726f5e619f7e0a057a474155f307"
+  url "https://curl.se/download/curl-7.88.1.tar.bz2"
+  mirror "https://github.com/curl/curl/releases/download/curl-7_88_0/curl-7.88.1.tar.bz2"
+  mirror "http://fresh-center.net/linux/www/curl-7.88.1.tar.bz2"
+  mirror "http://fresh-center.net/linux/www/legacy/curl-7.88.1.tar.bz2"
+  sha256 "8224b45cce12abde039c12dc0711b7ea85b104b9ad534d6e4c5b4e188a61c907"
   license "curl"
 
   livecheck do
@@ -14,17 +14,17 @@ class Curl < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "fe0cb294a13b62cdf031f9a33e5c41dc44726a5a6e7c473d615769b42f162aff"
-    sha256 cellar: :any,                 arm64_monterey: "bb61fd89bf7b336f05192f505520dfddc6459e303fbd2685a690594a92d80240"
-    sha256 cellar: :any,                 arm64_big_sur:  "47882084f55244d05faec7e1a526c4046ea712e467af105739456929cd52c5e0"
-    sha256 cellar: :any,                 ventura:        "024436c8f9289be56f65a023d989dbc9925832da7487bc2ea9e85c5edcf0ad46"
-    sha256 cellar: :any,                 monterey:       "2fd90860e86005f871b2c86d8ec1a9151a49bb79939b8dfbb9416141176575c9"
-    sha256 cellar: :any,                 big_sur:        "11e5f63a85e5f40e53bd4cb58419d61b3c716b822df932b2f5e70bbe9c2ead5d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6406ab3ded7afe973ce7464262c427d6ef97099fc7916309205401bdf6a828c2"
+    sha256 cellar: :any,                 arm64_ventura:  "08848696ddff3fba97be392f5d2bf9943d8b353625f48eb384180803dd0afeb5"
+    sha256 cellar: :any,                 arm64_monterey: "2e798ccc193765d4493fa3ee9cc7e168817557b884e74c43869eeff26299769b"
+    sha256 cellar: :any,                 arm64_big_sur:  "1e52651a966cdf432d778ab89795a00dfd71d7969ea9477de6b7f080c379f3c4"
+    sha256 cellar: :any,                 ventura:        "72d1772795ffdb13b8d77243b1c42dd9b6367ed47cc25edb2bf7c12b684585d3"
+    sha256 cellar: :any,                 monterey:       "804a665b827fb444ba98d34b10de4fc2c771de682878a397d6a2d2f18af3ca06"
+    sha256 cellar: :any,                 big_sur:        "faddeff20a1d854e5b9a78ea5c7e068db9dd05f3b6f86fed295199bc204fb7a8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f915f992603842a7f608881e78d696fb9fd288e7fcf0f9f9c2b76fb72c2508e4"
   end
 
   head do
-    url "https://github.com/curl/curl.git"
+    url "https://github.com/curl/curl.git", branch: "master"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build

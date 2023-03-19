@@ -1,48 +1,33 @@
 class A2ps < Formula
   desc "Any-to-PostScript filter"
   homepage "https://www.gnu.org/software/a2ps/"
-  url "https://ftp.gnu.org/gnu/a2ps/a2ps-4.14.tar.gz"
-  mirror "https://ftpmirror.gnu.org/a2ps/a2ps-4.14.tar.gz"
-  sha256 "f3ae8d3d4564a41b6e2a21f237d2f2b104f48108591e8b83497500182a3ab3a4"
+  url "https://ftp.gnu.org/gnu/a2ps/a2ps-4.15.1.tar.gz"
+  mirror "https://ftpmirror.gnu.org/a2ps/a2ps-4.15.1.tar.gz"
+  sha256 "9797708ba02805afc3b5b91e06cb8eac97b85843a90e66cfde6a7c63ca042b2a"
   license "GPL-3.0-or-later"
 
   bottle do
-    rebuild 4
-    sha256 arm64_ventura:  "adf71e909a31762f566a32be68297e0ed7b43faa0e386e5b90b199896dcd5884"
-    sha256 arm64_monterey: "b92375f7cc49a7440b431d2248cad0d97c96fcca127dace6efdeb0b2f3faa08c"
-    sha256 arm64_big_sur:  "8ac02041dbec3966b6a695dfc4215b90b9e331ae6eb8c6698cbbfa0175154c9f"
-    sha256 ventura:        "9d729c98415a5953f0c8ef4f6dbb9ce9a7864bcf7aeda3b3dc8473130fddbc42"
-    sha256 monterey:       "c0347849efe7486dfa2c5cfd35fae4c87e194fdcd9a10c6ce8758c99e8cf144c"
-    sha256 big_sur:        "e87da2b47386fc7e3c6f20b3ff90c4bbe37b9e0aaa884440ffa216492dbc150b"
-    sha256 catalina:       "82e64b2008971430d160a3f564e32593e98fb55c43d7748c7deb9d6f546e1102"
-    sha256 mojave:         "8ca49b4797277f79e87e48ab4c6794601b64d1dde35b9eac556d4153b8237a51"
-    sha256 x86_64_linux:   "063b4b31a62c4d5bd905bc4faab09ac2a50c77291de52ab216fc6a7a56f8e406"
+    sha256 arm64_ventura:  "fc42e0092608f9ef0d6b58ae9ea6c9169d7f1ed2254bb4e853b64ae0211a524b"
+    sha256 arm64_monterey: "73716b5705accbc90ddee8cd4217b96196aa18a7ddd33f71c61e1163161b964b"
+    sha256 arm64_big_sur:  "2be1aba4da4eb148f70e472e3cf730bf683573c05623f79cf814d69d2b40f862"
+    sha256 ventura:        "93548ad781a7977662ae735698c6b65eb6d60fbf857020bc750b2a9cbe2a1bb4"
+    sha256 monterey:       "4f9c4713dbad720076dff95391dfeb8d2f291b09babba23640191c86cb7be989"
+    sha256 big_sur:        "1f2e0179c49b21d40902c0e8ddbbaa802959c44c029a0a6c3030656e3b4009a5"
+    sha256 x86_64_linux:   "7d1812595f9555173f0ee2e58d8c7cec3b2fdb3dd6acc39f45d9fa414a44e401"
   end
 
+  depends_on "pkg-config" => :build
+  depends_on "bdw-gc"
+  depends_on "libpaper"
   uses_from_macos "gperf"
 
-  on_macos do
-    # Software was last updated in 2007.
-    # https://trac.macports.org/ticket/18255
-    patch :p0 do
-      url "https://raw.githubusercontent.com/Homebrew/formula-patches/0ae366e6/a2ps/patch-contrib_sample_Makefile.in"
-      sha256 "5a34c101feb00cf52199a28b1ea1bca83608cf0a1cb123e6af2d3d8992c6011f"
-    end
-
-    # https://trac.macports.org/ticket/20867
-    patch :p0 do
-      url "https://raw.githubusercontent.com/Homebrew/formula-patches/0ae366e6/a2ps/patch-lib__xstrrpl.c"
-      sha256 "89fa3c95c329ec326e2e76493471a7a974c673792725059ef121e6f9efb05bf4"
-    end
-  end
-
   def install
-    # Work around configure issues with Xcode 12
-    ENV.append "CFLAGS", "-Wno-implicit-function-declaration"
-
-    system "./configure", "--disable-debug", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}", "--sysconfdir=#{etc}",
-                          "--with-lispdir=#{elisp}"
+    system "./configure", *std_configure_args,
+                          "--sysconfdir=#{etc}",
+                          "--with-lispdir=#{elisp}",
+                          "--with-packager=#{tap.user}",
+                          "--with-packager-version=#{pkg_version}",
+                          "--with-packager-bug-reports=#{tap.issues_url}"
     system "make", "install"
   end
 

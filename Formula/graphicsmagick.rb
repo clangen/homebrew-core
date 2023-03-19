@@ -1,10 +1,10 @@
 class Graphicsmagick < Formula
   desc "Image processing tools collection"
   homepage "http://www.graphicsmagick.org/"
-  url "https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.38/GraphicsMagick-1.3.38.tar.xz"
-  sha256 "d60cd9db59351d2b9cb19beb443170acaa28f073d13d258f67b3627635e32675"
+  url "https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.40/GraphicsMagick-1.3.40.tar.xz"
+  sha256 "97dc1a9d4e89c77b25a3b24505e7ff1653b88f9bfe31f189ce10804b8efa7746"
   license "MIT"
-  revision 2
+  revision 1
   head "http://hg.code.sf.net/p/graphicsmagick/code", using: :hg
 
   livecheck do
@@ -12,13 +12,13 @@ class Graphicsmagick < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "9d0c19082798136f56653befe206c15bcb25e18b9776d61a423beb2ba54ccc1c"
-    sha256 arm64_monterey: "27e822354194c54efdd88a66863a68e408db7a66d1e8b90540232656eb49f4bf"
-    sha256 arm64_big_sur:  "81a66f25de0b9b9012deb9064ff2f51ff3b7b19203f4b41afcd4ac6e4a7c0fa8"
-    sha256 ventura:        "5114e31150c4c518079ed0c16f5b08c9f24fd43a78c14a008627f3bd86d80676"
-    sha256 monterey:       "16621a3839579df37d8966e37faaaf4e7626c4108c60b68591d6ba4c9871ea4e"
-    sha256 big_sur:        "2a8d4f330b472b229b49524d02d84db9cc2aee07ef48f278d8b8358b62cd812a"
-    sha256 x86_64_linux:   "ac9e82a002e9af78da4ca6100567102829b192414a0fc499dc453b02b76d0098"
+    sha256 arm64_ventura:  "6cad7b1528f48c90f90405ef6f0454fa26d3c40009c4c71a14447fb3975babc0"
+    sha256 arm64_monterey: "4f448e321cccf5fd8e9ebeebea6966f0ccd9a89342464f2ee13a6e3bd408b94e"
+    sha256 arm64_big_sur:  "735f00a3dab2472727e8139de794355270736e7e3b03a89b4376b8a0ef7d56b7"
+    sha256 ventura:        "c774245ed95564630621c594e43370159016257e43e87a33321b394175bfb3ac"
+    sha256 monterey:       "c641883183a53def3bfecb1e39f98f85cf302d81c9c247691fbcd00542274a6f"
+    sha256 big_sur:        "d33e9530e536396d5185cb8a9df360202c7d7f56828deac6529c087ba40f9829"
+    sha256 x86_64_linux:   "fd501846245487c2bd0b26176df5a4611be490bc36ebc1fc86171ccb7eb74eee"
   end
 
   depends_on "pkg-config" => :build

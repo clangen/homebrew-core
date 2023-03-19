@@ -7,8 +7,8 @@ class Libplacebo < Formula
   head "https://code.videolan.org/videolan/libplacebo.git", branch: "master"
 
   stable do
-    url "https://code.videolan.org/videolan/libplacebo/-/archive/v5.229.1/libplacebo-v5.229.1.tar.bz2"
-    sha256 "fef7000bd498921c2f6eb567a60c95fbb3ea39ff0a3d5cc68176eb27b5dd882c"
+    url "https://code.videolan.org/videolan/libplacebo/-/archive/v5.264.0/libplacebo-v5.264.0.tar.bz2"
+    sha256 "361c2936b0c9d18ca4a56a7aee63f91f3024c3206f72d42205ca58ed941e0c6b"
 
     resource "glad" do
       url "https://files.pythonhosted.org/packages/e5/5f/a88837847083930e289e1eee93a9376a0a89a2a373d148abe7c804ad6657/glad2-2.0.2.tar.gz"
@@ -27,18 +27,18 @@ class Libplacebo < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_ventura:  "f836c0f2d72ee350cafc1ed9e3c7dcb0004ea8a5f23dc1a7b772a200a7ee6bb8"
-    sha256 cellar: :any, arm64_monterey: "82dfb4d29e647496897ec8f45e44e61574ead9e0d2e07e0d223d374286492807"
-    sha256 cellar: :any, arm64_big_sur:  "02d1c68e4e70cca3f800fbd457544f10f9311e3acb034d6f2323ed19af26b65a"
-    sha256 cellar: :any, ventura:        "c4972dfcf3c91aec6789ae40a131e15835e7f02a10f459db1b3058c225256c7b"
-    sha256 cellar: :any, monterey:       "739c011349ca2db7198d0089a0896e3b10c40ef8609273852e7385ef3aa98d49"
-    sha256 cellar: :any, big_sur:        "a668ac54f239149f53b810577d955a06a26211d91cb582f406cb9ed04f2306e0"
-    sha256               x86_64_linux:   "197511f3a746307cbf11249f9f26dd7ae47b8926bdb9843d6f3c89b75e7d571d"
+    sha256 cellar: :any,                 arm64_ventura:  "1b05f2f221207a72eb0aeff0e9e37b8d1f4e835e159a0a2bb36d7acddfe9c2ef"
+    sha256 cellar: :any,                 arm64_monterey: "c0e4a6375bc8fd2d89247a4bbc6c61dbf48253610d02e3ddc1d5c12668c84724"
+    sha256 cellar: :any,                 arm64_big_sur:  "ad4989d3cbbce00f7e8bcd9fc83ee2c7251e7badba15d488871d70736e962867"
+    sha256 cellar: :any,                 ventura:        "246b9d7683c435ba28de917fb9de6fbce3f21922a4a3654ddd8baac1bb925dec"
+    sha256 cellar: :any,                 monterey:       "bb3746c338f7c079f537167689761fd626dbee20fa668625e2729e56f3cbe876"
+    sha256 cellar: :any,                 big_sur:        "67b2935367bd5517deea483e4a1289240e5a1ec47c46ecf788ae95a0819cac00"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1b5a9b11c0861b7bd23b547dcaf36648194ab4062d639428ba7500791653deac"
   end
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "vulkan-headers" => :build
 
   depends_on "ffmpeg"

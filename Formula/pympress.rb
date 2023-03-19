@@ -3,21 +3,19 @@ class Pympress < Formula
 
   desc "Simple and powerful dual-screen PDF reader designed for presentations"
   homepage "https://github.com/Cimbali/pympress/"
-  url "https://files.pythonhosted.org/packages/f6/a0/93d92200dd3febe3c83fbf491a353aed2bb8199cfc22f3b684ea77cdbecf/pympress-1.7.2.tar.gz"
-  sha256 "2c5533ac61ebf23994aa821c2a8902d203435665b51146658fd788f860f272f2"
+  url "https://files.pythonhosted.org/packages/70/a0/08ead2b665bea74f291466fca2996fb784110777ec441347e10555534135/pympress-1.8.0.tar.gz"
+  sha256 "160255c6dcfa5fa6bc69b40b1bde3c4ba7c10f750aeee2d6bc1877d343f743ec"
   license "GPL-2.0-or-later"
-  revision 1
   head "https://github.com/Cimbali/pympress.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "45e5893df9e1cc5a03e740f62244addd54fbad761bfd5a49b2248dec2371e4df"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "eb706b6cc0981b97daed3da8ef4d91706f06d783216d41cdcce862cb3593f880"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0358890f1207e2b1c942879e76aef1f27dde25c7e8e7210b65b7038df84798ea"
-    sha256 cellar: :any_skip_relocation, ventura:        "19aa1e1f3910c8fb7288b58baf568122255bf20189449bf3013e88c791517d69"
-    sha256 cellar: :any_skip_relocation, monterey:       "6c2f636c96df736d8f859a9f43b7a7fb7df8bf619ee3c4340199087be8b8a42a"
-    sha256 cellar: :any_skip_relocation, big_sur:        "275a8a4123fcabd193e9f054c69bf4ba6f74a5537273114adce0463c26fb26ce"
-    sha256 cellar: :any_skip_relocation, catalina:       "214402f0a35fac37cc7a563ce7224de750f32b69515334780c1aaf00198081fd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "381e24b30713ddf630d52e7775fd03b7262ecbffa21e588eb1027e721f888ce4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "45c35f890a12c1366a133639c4be40a42f08f02c3b0c956f2d7a283a5e17924c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "5ae156875483217aeea9285f11a975702a8276197c064d084e4cf504817cf965"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "57bf56a75c88bbf323a8cdd16db71ce3e26603194e5e145fd30fe32ce3187fb8"
+    sha256 cellar: :any_skip_relocation, ventura:        "760c0305decb192528f49066db8c4b5b7db84be3c45efe99937cf15f57bd69de"
+    sha256 cellar: :any_skip_relocation, monterey:       "87d54f922fe9afc8414222f617b8e7413bd9a7392c75eb9a3b26c59c96e27517"
+    sha256 cellar: :any_skip_relocation, big_sur:        "327a1eb24da466102393c001e19bc212992f31f62c48ca361ab8baac80abf81e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b0a4f91cc1243171dc3260fc8e0b55e544eb2823d3343e066d134bb233c8a0d0"
   end
 
   depends_on "gobject-introspection"
@@ -30,11 +28,11 @@ class Pympress < Formula
   depends_on "libyaml"
   depends_on "poppler"
   depends_on "pygobject3"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   resource "watchdog" do
-    url "https://files.pythonhosted.org/packages/b3/d2/a04951838e0b0cea20aff5214109144e6869101818e7f90bf3b68ea2facf/watchdog-2.1.7.tar.gz"
-    sha256 "3fd47815353be9c44eebc94cc28fe26b2b0c5bd889dafc4a5a7cbdf924143480"
+    url "https://files.pythonhosted.org/packages/a5/17/a31fc6b90ff861a27debd0650bfbca17e074fdc3e037f392872fad76c726/watchdog-2.3.1.tar.gz"
+    sha256 "d9f9ed26ed22a9d331820a8432c3680707ea8b54121ddcc9dc7d9f2ceeb36906"
   end
 
   def install

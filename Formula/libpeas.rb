@@ -1,19 +1,18 @@
 class Libpeas < Formula
   desc "GObject plugin library"
   homepage "https://wiki.gnome.org/Projects/Libpeas"
-  url "https://download.gnome.org/sources/libpeas/1.34/libpeas-1.34.0.tar.xz"
-  sha256 "4305f715dab4b5ad3e8007daec316625e7065a94e63e25ef55eb1efb964a7bf0"
+  url "https://download.gnome.org/sources/libpeas/1.36/libpeas-1.36.0.tar.xz"
+  sha256 "297cb9c2cccd8e8617623d1a3e8415b4530b8e5a893e3527bbfd1edd13237b4c"
   license "LGPL-2.1-or-later"
 
   bottle do
-    sha256 arm64_ventura:  "e0c2f4f3d793b2cb31c147335b8b8a73a936b3a1c92716360906719e36d847ba"
-    sha256 arm64_monterey: "f31169f0a56251d8250a7aa3607e4d1dd48c713573af071f94ab53e5023571cf"
-    sha256 arm64_big_sur:  "ef7e7384713bc1ff69fe899f7ccc93c9650127a093d1e624b5c23db171ed7e1b"
-    sha256 ventura:        "e5519ec916ba85ceffbfe7a6f237eb8569e399d72ec933bc20e728c7387cf8de"
-    sha256 monterey:       "e392e3b05c1f5e86bed510ccf197282ad97a6d5ff4e2fb4cfa33b8656806ffb4"
-    sha256 big_sur:        "9ee9248b680889d1586a0593d5429d61c3d74bdf007135c0a0813133482ea2c3"
-    sha256 catalina:       "ec22a78bc5ec276e481be7c48418e6b47a9540cd3a3ee86e2b8bc33ad145df1a"
-    sha256 x86_64_linux:   "cbeeed81c14de0eca458731003ad9558f3b5bb1d159d40b217d3b7c5d1aa3f23"
+    sha256 arm64_ventura:  "5035cbd0ee756c5ee11237a3a76793f8baddf9efd7ac642942655d7dee6f0263"
+    sha256 arm64_monterey: "c41fbcf2dd609afa94e61573ddc2d696e3319c736be0cb6a7287ab124ab27edb"
+    sha256 arm64_big_sur:  "1e84d7e5d18d247efb35a15750fae0d5639ccf1bdc566d24171527682ee9259e"
+    sha256 ventura:        "b1f6f50765a449fb859b31775ee9c8fd3b7719619749e217af51fd34d2b7ddef"
+    sha256 monterey:       "17b8dba6575562741d55c46022e0bfddca9223d389955990712679b1436f27d0"
+    sha256 big_sur:        "ccbf503dc2c680a7f0ba32f0a22e05e68bc2a7d50557c4754c8de7f473f32724"
+    sha256 x86_64_linux:   "3df218b0dcc953b55eb149454943c4ccead6397720b313dd65af783ccd03ab49"
   end
 
   depends_on "meson" => :build
@@ -24,7 +23,7 @@ class Libpeas < Formula
   depends_on "gobject-introspection"
   depends_on "gtk+3"
   depends_on "pygobject3"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   def install
     args = %w[

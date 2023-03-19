@@ -2,8 +2,8 @@ class Grpc < Formula
   desc "Next generation open source RPC library and framework"
   homepage "https://grpc.io/"
   url "https://github.com/grpc/grpc.git",
-      tag:      "v1.51.1",
-      revision: "0a82c02a9b817a53574994374dcff53f2e961df2"
+      tag:      "v1.52.1",
+      revision: "c2682c64a5f8599b5690a79b50f1c9c3ef5e2433"
   license "Apache-2.0"
   head "https://github.com/grpc/grpc.git", branch: "master"
 
@@ -17,13 +17,13 @@ class Grpc < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "ae834c08d68b254734cbc447444a7ed68c586bf54f7264a60fd9d5c84579b252"
-    sha256 cellar: :any,                 arm64_monterey: "1608c7eedf66260356b7250d6a506f176e77cfa573adc8421fc95ceb3a4892d3"
-    sha256 cellar: :any,                 arm64_big_sur:  "273400008e5051aa362e72c850d70b12b928a0122bf3b6e72a71d84865b7c39f"
-    sha256 cellar: :any,                 ventura:        "546f1b138ecabede6d0ab9786e9ffb206c4b708f48101ebef41acc2301b79af5"
-    sha256 cellar: :any,                 monterey:       "23fd418457a3c933128e182c4a7a507a9a174eaeaa523965504d105cf3df6fb8"
-    sha256 cellar: :any,                 big_sur:        "2ab684061c5927a4f12fdba3ae5d1084b63169568989b6789a36637742120133"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fdaa72c6288d904047b2a1d7b0298e4687b896738d215a16ea761d292195f079"
+    sha256 cellar: :any,                 arm64_ventura:  "8e05bb40f16818ff179166540366c7b886e6a5d3b158dae3061e842fd1ead9d7"
+    sha256 cellar: :any,                 arm64_monterey: "5d49d3803a3675fd13ed48cb71d40008c593a065671d206a59d2e2a3770961f5"
+    sha256 cellar: :any,                 arm64_big_sur:  "f490124105b78a932a6f2699b82779ac5969bb03178e85e222d9a8af871e4831"
+    sha256 cellar: :any,                 ventura:        "d71f142614cfa43d1675254dedf80d721cdd7d79f2efac56ae3551b97785b695"
+    sha256 cellar: :any,                 monterey:       "188873a19aeb12c8d94b441125647c513a5b8be7a4ab6d4c098350f559a98d73"
+    sha256 cellar: :any,                 big_sur:        "1733b2984d5218d8f5d9e25584a9ac32c489a074fcfe02e1c8901ef224e6248e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6c2922d216c917027c45c5e72b5ea0892566eb40e18a0bf1737dde7d92998c81"
   end
 
   depends_on "autoconf" => :build
@@ -105,7 +105,7 @@ class Grpc < Formula
     system ENV.cc, "test.cpp", "-L#{Formula["abseil"].opt_lib}", *pkg_config_flags, "-o", "test"
     system "./test"
 
-    output = shell_output("grpc_cli ls localhost:#{free_port} 2>&1", 1)
+    output = shell_output("#{bin}/grpc_cli ls localhost:#{free_port} 2>&1", 1)
     assert_match "Received an error when querying services endpoint.", output
   end
 end
