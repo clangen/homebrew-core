@@ -24,10 +24,16 @@ class Musikcube < Formula
   uses_from_macos "ncurses"
 
   def install
+    platform_specific_args = []
+    if OS.mac?
+      platform_specific_args = [
+        "-DNO_NCURSES_W=true",
+        "-DENABLE_MACOS_SYSTEM_NCURSES=true",
+      ]
+    end
     system "cmake",
       ".",
-      "-DNO_NCURSESW=true",
-      "-DENABLE_MACOS_SYSTEM_NCURSES=true",
+      *platform_specific_args,
       *std_cmake_args
     system "make"
     system "make", "install"
