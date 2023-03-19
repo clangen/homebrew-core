@@ -26,6 +26,7 @@ class Musikcube < Formula
   def install
     system "cmake",
       ".",
+      "-DNO_NCURSESW=true",
       "-DENABLE_MACOS_SYSTEM_NCURSES=true",
       *std_cmake_args
     system "make"
