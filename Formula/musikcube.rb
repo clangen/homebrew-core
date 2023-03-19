@@ -27,7 +27,7 @@ class Musikcube < Formula
     platform_specific_args = []
     if OS.mac?
       platform_specific_args = [
-        "-DNO_NCURSES_W=true",
+        "-DNO_NCURSESW=true",
         "-DENABLE_MACOS_SYSTEM_NCURSES=true",
       ]
     end
