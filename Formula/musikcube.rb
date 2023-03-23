@@ -1,8 +1,8 @@
 class Musikcube < Formula
   desc "Terminal-based audio engine, library, player and server"
   homepage "https://musikcube.com"
-  url "https://github.com/clangen/musikcube/archive/0.99.6.tar.gz"
-  sha256 "739375d47414ad1d8c68facb2d8a975b67584432c2b4d57504d99beffe6922e9"
+  url "https://github.com/clangen/musikcube/archive/0.99.7.tar.gz"
+  sha256 "60796ff96e2b760350181609d9b838e96efdb1231a421407db55eba157fea4d5"
   license "BSD-3-Clause"
   head "https://github.com/clangen/musikcube.git", branch: "master"
 
@@ -25,16 +25,16 @@ class Musikcube < Formula
   uses_from_macos "curl"
 
   def install
-    system "cmake", ".", *std_cmake_args
-    system "make"
-    system "make", "install"
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do
-    system "#{bin}/musikcubed", "--start"
+    system bin/"musikcubed", "--start"
     system "sleep", "5"
     assert_path_exists "/tmp/musikcubed.lock"
     system "sleep", "5"
-    system "#{bin}/musikcubed", "--stop"
+    system bin/"musikcubed", "--stop"
   end
 end
